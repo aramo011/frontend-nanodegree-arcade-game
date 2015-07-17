@@ -99,6 +99,11 @@
         readyCallbacks.push(func);
     }
 
+    /* Returns a random integer between min and max, both inclusive */
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     /* This object defines the publicly accessible functions available to
      * developers by creating a global Resources object.
      */
@@ -106,6 +111,7 @@
         load: load,
         get: get,
         onReady: onReady,
-        isReady: isReady
+        isReady: isReady,
+        getRandomInt : getRandomInt
     };
 })();
