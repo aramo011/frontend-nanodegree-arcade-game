@@ -2,10 +2,14 @@
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-    this.baseXPos = 0;
-    this.baseYPos = 60;
+    this.baseXPos = 0;   // base x coordinate
+    this.baseYPos = 60;  // base y coordinate
+
+    // random enemy speed selection (speeds: low, medium, fast)
     this.speed = 100 * Resources.getRandomInt(1, 3);
 
+    // Initial enemy position selection, (x,y) position will be randomly selected
+    // between upper, middle, and lower stone rows and five stone columns
     this.x = this.baseXPos + (101 * Resources.getRandomInt(0, 5)); 
     this.y = this.baseYPos + (83 * Resources.getRandomInt(0, 2));
 
@@ -22,7 +26,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     var newX = this.x + (this.speed * dt);
     if (newX <= 505)
-        this.x = newX;
+        this.x = newX; // enemy is within screen limits
     else { // enemy reached screen limit, restarting (X,Y) coord and Speed
         this.x = -100;
         this.y = this.baseYPos + (83 * Resources.getRandomInt(0, 2));
@@ -40,13 +44,27 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.x = 202;
-    this.y = 405;
+    this.x = this.newXpos = 202;
+    this.y = this.newYpos = 405;
+    //this.newXpos = 0;
+    //this.newYpos = 0;
     this.sprite = 'images/char-boy.png';
 }
 
 Player.prototype.update = function() {
+    if ((this.newXpos >= 0) && (this.newXpos <= 404)) {
+        this.x = this.newXpos;
+    }
+    if ((this.newYpos > 0) && (this.newYpos <= 415)) {
+        this.y = this.newYpos;
+    }
+    else {
+        if (this.newYpos <= 0)
+            // player reached water, player position is reset
+            this.x = this.newXpos = 202;
+            this.y = this.newYpos = 405;
 
+    }
 }
 
 Player.prototype.render = function() {
@@ -54,34 +72,38 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(direction) {
-    var newXpos, newYpos;
+    //var newXpos, newYpos;
     switch (direction) {
         case 'left'  : 
-            newXpos = this.x - 101;
-            if (newXpos >= 0)
-                this.x = newXpos;
+            this.newXpos = this.x - 101;
+            //newXpos = this.x - 101;
+            //if (newXpos >= 0)
+            //    this.x = newXpos;
             break;
 
         case 'right' : 
-            newXpos = this.x + 101;
-            if (newXpos <= 404)
-                this.x = newXpos;
+            this.newXpos = this.x + 101;
+            //newXpos = this.x + 101;
+            //if (newXpos <= 404)
+            //    this.x = newXpos;
             break;
 
         case 'up' :
-            newYpos = this.y - 83;
-            if (newYpos > 0)
-                this.y = newYpos;
-            else { // player reached water, player is reset
-                this.x = 202;
-                this.y = 405;
-            }
+            this.newYpos = this.y - 83;
+            //newYpos = this.y - 83;
+            //if (newYpos > 0)
+            //    this.y = newYpos;
+            //else { // player reached water, player is reset
+            //    this.x = 202;
+            //    this.y = 405;
+            //}
             break;
 
         case 'down' :
-            newXpos = this.y + 83;
-            if (newXpos <= 415)
-                this.y = newXpos;
+            this.newYpos = this.y + 83;
+            //newXpos = this.y + 83;
+            //if (newXpos <= 415)
+            //    this.y = newXpos;
             break;
     }
 }

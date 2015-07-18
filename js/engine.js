@@ -101,8 +101,9 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             if (((enemy.x >= (player.x - 50)) && (enemy.x <= (player.x + 50))) && 
                 (enemy.y == (player.y - 13))) {
-                player.x = 202;
-                player.y = 405;
+                // player and enemy have collosioned, player position is reset
+                player.x = player.newXpos = 202;
+                player.y = player.newYpos = 405;
             }
         });
     }
