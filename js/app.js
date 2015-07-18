@@ -44,14 +44,35 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.x = this.newXpos = 202;
-    this.y = this.newYpos = 405;
-    //this.newXpos = 0;
-    //this.newYpos = 0;
+    //this.x = this.newXpos = 202;
+    //this.y = this.newYpos = 405;
+    this.x = 202;
+    this.y = 405;
+    this.shiftX = 0;
+    this.shiftY = 0;
     this.sprite = 'images/char-boy.png';
 }
 
 Player.prototype.update = function() {
+    var newX = this.x + this.shiftX;
+    var newY = this.y + this.shiftY;
+
+    if ((newX >= 0) && (newX <= 404)) {
+        this.x = newX;
+    }
+    if ((newY > 0) && (newY <= 415)) {
+        this.y = newY;
+    }
+    else {
+        if (newY <= 0) {
+            this.x = 202;
+            this.y = 405;
+        }
+    }
+
+    this.shiftX = this.shiftY = 0;
+
+    /*
     if ((this.newXpos >= 0) && (this.newXpos <= 404)) {
         this.x = this.newXpos;
     }
@@ -59,12 +80,13 @@ Player.prototype.update = function() {
         this.y = this.newYpos;
     }
     else {
-        if (this.newYpos <= 0)
+        if (this.newYpos <= 0) {
             // player reached water, player position is reset
             this.x = this.newXpos = 202;
             this.y = this.newYpos = 405;
-
+        }
     }
+    */
 }
 
 Player.prototype.render = function() {
@@ -74,36 +96,21 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(direction) {
     //var newXpos, newYpos;
     switch (direction) {
-        case 'left'  : 
-            this.newXpos = this.x - 101;
-            //newXpos = this.x - 101;
-            //if (newXpos >= 0)
-            //    this.x = newXpos;
+        case 'left'  :
+            this.shiftX = -101;
+            //this.newXpos = this.x - 101;
             break;
-
-        case 'right' : 
-            this.newXpos = this.x + 101;
-            //newXpos = this.x + 101;
-            //if (newXpos <= 404)
-            //    this.x = newXpos;
+        case 'right' :
+            this.shiftX = 101;
+            //this.newXpos = this.x + 101;;
             break;
-
         case 'up' :
-            this.newYpos = this.y - 83;
-            //newYpos = this.y - 83;
-            //if (newYpos > 0)
-            //    this.y = newYpos;
-            //else { // player reached water, player is reset
-            //    this.x = 202;
-            //    this.y = 405;
-            //}
+            this.shiftY = -83;
+            //this.newYpos = this.y - 83;
             break;
-
         case 'down' :
-            this.newYpos = this.y + 83;
-            //newXpos = this.y + 83;
-            //if (newXpos <= 415)
-            //    this.y = newXpos;
+            this.shiftY = 83;
+            //this.newYpos = this.y + 83;
             break;
     }
 }
