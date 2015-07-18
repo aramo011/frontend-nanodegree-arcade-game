@@ -44,8 +44,6 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    //this.x = this.newXpos = 202;
-    //this.y = this.newYpos = 405;
     this.x = 202;
     this.y = 405;
     this.shiftX = 0;
@@ -71,22 +69,6 @@ Player.prototype.update = function() {
     }
 
     this.shiftX = this.shiftY = 0;
-
-    /*
-    if ((this.newXpos >= 0) && (this.newXpos <= 404)) {
-        this.x = this.newXpos;
-    }
-    if ((this.newYpos > 0) && (this.newYpos <= 415)) {
-        this.y = this.newYpos;
-    }
-    else {
-        if (this.newYpos <= 0) {
-            // player reached water, player position is reset
-            this.x = this.newXpos = 202;
-            this.y = this.newYpos = 405;
-        }
-    }
-    */
 }
 
 Player.prototype.render = function() {
@@ -94,23 +76,18 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(direction) {
-    //var newXpos, newYpos;
     switch (direction) {
         case 'left'  :
             this.shiftX = -101;
-            //this.newXpos = this.x - 101;
             break;
         case 'right' :
             this.shiftX = 101;
-            //this.newXpos = this.x + 101;;
             break;
         case 'up' :
             this.shiftY = -83;
-            //this.newYpos = this.y - 83;
             break;
         case 'down' :
             this.shiftY = 83;
-            //this.newYpos = this.y + 83;
             break;
     }
 }
