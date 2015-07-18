@@ -44,11 +44,17 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.x = 202;
-    this.y = 405;
+    //this.x = 202;
+    //this.y = 405;
+    this.reset();
     this.shiftX = 0;
     this.shiftY = 0;
     this.sprite = 'images/char-boy.png';
+}
+
+Player.prototype.reset = function() {
+    this.x = 202;
+    this.y = 405;
 }
 
 Player.prototype.update = function() {
@@ -63,8 +69,7 @@ Player.prototype.update = function() {
     }
     else {
         if (newY <= 0) {
-            this.x = 202;
-            this.y = 405;
+            this.reset();
         }
     }
 
