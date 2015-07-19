@@ -26,8 +26,8 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     var newX = this.x + (this.speed * dt);
     if (newX <= 505)
-        this.x = newX; // enemy is within screen limits
-    else { // enemy reached screen limit, restarting (X,Y) coord and Speed
+        this.x = newX;  // enemy is within screen limits
+    else {  // enemy reached screen limit, restarting (X,Y) coord and Speed
         this.x = -100;
         this.y = this.baseYPos + (83 * Resources.getRandomInt(0, 2));
         this.speed = 100 * Resources.getRandomInt(1, 3);
@@ -44,14 +44,13 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    //this.x = 202;
-    //this.y = 405;
-    this.reset();
-    this.shiftX = 0;
-    this.shiftY = 0;
+    this.reset();       // Restart player to initial position
+    this.shiftX = 0;    // x coordinate pixels movement    
+    this.shiftY = 0;    // y coordinate pixels movement
     this.sprite = 'images/char-boy.png';
 }
 
+// Reset player's coordinates to initial position
 Player.prototype.reset = function() {
     this.x = 202;
     this.y = 405;
@@ -80,6 +79,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+// Process user input for player movement
 Player.prototype.handleInput = function(direction) {
     switch (direction) {
         case 'left'  :
@@ -101,6 +101,8 @@ Player.prototype.handleInput = function(direction) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
+
+// Instantiating five Enemy objects 
 for (var i = 0; i < 5; i++) {
     allEnemies[i] = new Enemy();
 }
