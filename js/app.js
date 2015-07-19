@@ -50,8 +50,8 @@ var Player = function() {
     this.sprite = 'images/char-boy.png';
 }
 
-// Reset player's coordinates to initial position
-Player.prototype.reset = function() {
+// Reset player's coordinates to initial position (3rd column, 6th row)
+Player.prototype.reset = function() { 
     this.x = 202;
     this.y = 405;
 }
@@ -60,15 +60,16 @@ Player.prototype.update = function() {
     var newX = this.x + this.shiftX;
     var newY = this.y + this.shiftY;
 
-    if ((newX >= 0) && (newX <= 404)) {
+    if ((newX >= 0) && (newX <= 404)) { // player moved within x coord screen limits, new x coord updated
         this.x = newX;
     }
-    if ((newY > 0) && (newY <= 415)) {
+    if ((newY > 0) && (newY <= 415)) { // player moved within x coord screen limits, new y coord updated
         this.y = newY;
     }
     else {
-        if (newY <= 0) {
+        if (newY <= 0) { // player reached water, player restarts to inital position
             this.reset();
+            scoreboard.score++; // increment score by one unit
         }
     }
 
@@ -80,7 +81,7 @@ Player.prototype.render = function() {
 }
 
 // Process user input for player movement
-Player.prototype.handleInput = function(direction) {
+Player.prototype.handleInput = function(direction) { // only left, right, up, and down keys are processed. The rest are ignored
     switch (direction) {
         case 'left'  :
             this.shiftX = -101;
@@ -97,6 +98,16 @@ Player.prototype.handleInput = function(direction) {
     }
 }
 
+// Scoreboard class to keep game score
+var Scoreboard = function() {
+    this.score = 0;
+}
+
+Scoreboard.prototype.update = function() {
+    document.getElementById('score').textContent = this.score; // html span tag text is updated
+}
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -108,6 +119,8 @@ for (var i = 0; i < 5; i++) {
 }
 
 var player = new Player();
+
+var scoreboard = new Scoreboard();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

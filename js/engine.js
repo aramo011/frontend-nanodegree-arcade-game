@@ -29,6 +29,7 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -95,6 +96,7 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        scoreboard.update();
     }
 
     function checkCollisions() {
@@ -102,6 +104,7 @@ var Engine = (function(global) {
             if (((enemy.x >= (player.x - 50)) && (enemy.x <= (player.x + 50))) && 
                 (enemy.y == (player.y - 13))) {
                 player.reset();
+                scoreboard.score--; // score decremented by one due to collision
             }
         });
     }
@@ -145,7 +148,6 @@ var Engine = (function(global) {
             }
         }
 
-
         renderEntities();
     }
 
@@ -169,7 +171,8 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        scoreboard.score = 0;
+        scoreboard.update();
     }
 
     /* Go ahead and load all of the images we know we're going to need to
