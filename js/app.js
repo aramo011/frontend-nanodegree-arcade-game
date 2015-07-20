@@ -72,7 +72,6 @@ Player.prototype.update = function() {
             scoreboard.score++; // increment score by one unit
         }
     }
-    //console.log(this.x + ',' + this.y);
     this.shiftX = this.shiftY = 0;
 };
 
@@ -144,7 +143,6 @@ Gem.prototype.renderTimer = function() {
         gem.sprite = gemType.sprite;
         gem.update();
         gem.renderOn = !(gem.renderOn); // alternate active/inactive gem rendering
-        console.log(gem.x + ',' + gem.y);
         gemTimeout = setTimeout(function() {gem.renderOn = !(gem.renderOn);}, gemType.timeout);
     }, 12000);
 };
