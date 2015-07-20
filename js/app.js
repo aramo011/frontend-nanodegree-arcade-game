@@ -115,16 +115,23 @@ var Gem = function() {
     this.renderOn = false;
     this.sprite;
 
-    this.spriteArray = [{ sprite : 'images/gem-blue.png', timeout : 6000 },
+    this.spriteArray = [{ sprite : 'images/gem-blue.png', timeout : 4000 },
                         { sprite : 'images/gem-green.png', timeout : 3000 },
                         { sprite : 'images/gem-orange.png', timeout : 2000 }];
 };
 
+// Stop gem rendering
 Gem.prototype.reset = function() {
-    this.renderOn = false;
-    this.x = 0;
+    this.renderOn = false; 
+    this.x = 0; 
     this.y = 0;
-    clearTimeout(gemTimeout);
+    clearTimeout(gemTimeout); // stop setTimeout() from firing its anonymous function
+};
+
+Gem.prototype.update = function() {
+        // generate a random position
+        this.x = 26 + 101 * Resources.getRandomInt(0, 4);
+        this.y = 119 + 83 * Resources.getRandomInt(0, 2);
 };
 
 Gem.prototype.render = function() {
@@ -133,11 +140,10 @@ Gem.prototype.render = function() {
 
 Gem.prototype.renderTimer = function() {
     setInterval(function() {
-        var gemType = gem.spriteArray[Resources.getRandomInt(0, 2)]; 
+        var gemType = gem.spriteArray[Resources.getRandomInt(0, 2)]; // randomly select gem type
         gem.sprite = gemType.sprite;
-        gem.x = 26 + 101 * Resources.getRandomInt(0, 4);
-        gem.y = 119 + 83 * Resources.getRandomInt(0, 2);
-        gem.renderOn = !(gem.renderOn);
+        gem.update();
+        gem.renderOn = !(gem.renderOn); // alternate active/inactive gem rendering
         console.log(gem.x + ',' + gem.y);
         gemTimeout = setTimeout(function() {gem.renderOn = !(gem.renderOn);}, gemType.timeout);
     }, 12000);

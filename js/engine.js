@@ -109,14 +109,15 @@ var Engine = (function(global) {
             }
         });
 
+        // Check for gem catch
         if ((player.x == (gem.x - 26)) && (player.y == (gem.y - 46))) {
             gem.reset();
             switch(gem.sprite) {
-                case 'images/gem-blue.png' : scoreboard.score += 2;
+                case 'images/gem-blue.png' : scoreboard.score += 1;
                                              break;
-                case 'images/gem-green.png' : scoreboard.score += 3;
+                case 'images/gem-green.png' : scoreboard.score += 2;
                                               break;
-                case 'images/gem-orange.png' : scoreboard.score += 4;
+                case 'images/gem-orange.png' : scoreboard.score += 3;
                                                break;
             }
         }
