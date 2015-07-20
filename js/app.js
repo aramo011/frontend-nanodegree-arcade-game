@@ -16,7 +16,7 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-}
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -32,12 +32,12 @@ Enemy.prototype.update = function(dt) {
         this.y = this.baseYPos + (83 * Resources.getRandomInt(0, 2));
         this.speed = 100 * Resources.getRandomInt(1, 3);
     }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 
 // Now write your own player class
@@ -48,13 +48,13 @@ var Player = function() {
     this.shiftX = 0;    // x coordinate pixels movement    
     this.shiftY = 0;    // y coordinate pixels movement
     this.sprite = 'images/char-boy.png';
-}
+};
 
 // Reset player's coordinates to initial position (3rd column, 6th row)
 Player.prototype.reset = function() { 
     this.x = 202;
     this.y = 405;
-}
+};
 
 Player.prototype.update = function() {
     var newX = this.x + this.shiftX;
@@ -72,13 +72,13 @@ Player.prototype.update = function() {
             scoreboard.score++; // increment score by one unit
         }
     }
-
+    //console.log(this.x + ',' + this.y);
     this.shiftX = this.shiftY = 0;
-}
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // Process user input for player movement
 Player.prototype.handleInput = function(direction) { // only left, right, up, and down keys are processed. The rest are ignored
@@ -96,17 +96,52 @@ Player.prototype.handleInput = function(direction) { // only left, right, up, an
             this.shiftY = 83;
             break;
     }
-}
+};
 
 // Scoreboard class to keep game score
 var Scoreboard = function() {
     this.score = 0;
-}
+};
 
 Scoreboard.prototype.update = function() {
     document.getElementById('score').textContent = this.score; // html span tag text is updated
-}
+};
 
+
+// Gem class for bonus points
+var Gem = function() {
+    this.x = 0;
+    this.y = 0;
+    this.renderOn = false;
+    this.sprite;
+
+    this.spriteArray = [{ sprite : 'images/gem-blue.png', timeout : 6000 },
+                        { sprite : 'images/gem-green.png', timeout : 3000 },
+                        { sprite : 'images/gem-orange.png', timeout : 2000 }];
+};
+
+Gem.prototype.reset = function() {
+    this.renderOn = false;
+    this.x = 0;
+    this.y = 0;
+    clearTimeout(gemTimeout);
+};
+
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Gem.prototype.renderTimer = function() {
+    setInterval(function() {
+        var gemType = gem.spriteArray[Resources.getRandomInt(0, 2)]; 
+        gem.sprite = gemType.sprite;
+        gem.x = 26 + 101 * Resources.getRandomInt(0, 4);
+        gem.y = 119 + 83 * Resources.getRandomInt(0, 2);
+        gem.renderOn = !(gem.renderOn);
+        console.log(gem.x + ',' + gem.y);
+        gemTimeout = setTimeout(function() {gem.renderOn = !(gem.renderOn);}, gemType.timeout);
+    }, 12000);
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -121,6 +156,8 @@ for (var i = 0; i < 5; i++) {
 var player = new Player();
 
 var scoreboard = new Scoreboard();
+
+var gem = new Gem();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

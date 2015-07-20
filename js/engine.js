@@ -67,6 +67,7 @@ var Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
+        gem.renderTimer();
         main();
     }
 
@@ -104,9 +105,21 @@ var Engine = (function(global) {
             if (((enemy.x >= (player.x - 50)) && (enemy.x <= (player.x + 50))) && 
                 (enemy.y == (player.y - 13))) {
                 player.reset();
-                scoreboard.score--; // score decremented by one due to collision
+                scoreboard.score -= 2; // score decremented by one due to collision
             }
         });
+
+        if ((player.x == (gem.x - 26)) && (player.y == (gem.y - 46))) {
+            gem.reset();
+            switch(gem.sprite) {
+                case 'images/gem-blue.png' : scoreboard.score += 2;
+                                             break;
+                case 'images/gem-green.png' : scoreboard.score += 3;
+                                              break;
+                case 'images/gem-orange.png' : scoreboard.score += 4;
+                                               break;
+            }
+        }
     }
 
     /* This function initially draws the "game level", it will then call
@@ -164,6 +177,10 @@ var Engine = (function(global) {
         });
 
         player.render();
+
+        if (gem.renderOn) {
+            gem.render();
+        }    
     }
 
     /* This function does nothing but it could have been a good place to
@@ -184,7 +201,10 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/gem-blue.png',
+        'images/gem-green.png',
+        'images/gem-orange.png'
     ]);
     Resources.onReady(init);
 
