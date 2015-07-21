@@ -67,7 +67,7 @@ var Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
-        gem.renderTimer();
+        gem.renderTimer(); // start gem rendering cycle
         main();
     }
 
@@ -101,7 +101,7 @@ var Engine = (function(global) {
     }
 
     function checkCollisions() {
-        allEnemies.forEach(function(enemy) {
+        allEnemies.forEach(function(enemy) { // check if enemy and player are in collision 
             if (((enemy.x >= (player.x - 50)) && (enemy.x <= (player.x + 50))) && 
                 (enemy.y == (player.y - 13))) {
                 player.reset();
@@ -111,8 +111,8 @@ var Engine = (function(global) {
 
         // Check for gem catch
         if ((player.x == (gem.x - 26)) && (player.y == (gem.y - 46))) {
-            gem.reset();
-            switch(gem.sprite) {
+            gem.reset(); // stop gem rendering
+            switch(gem.sprite) { // select number of point increase depending the gem color
                 case 'images/gem-blue.png' : scoreboard.score += 1;
                                              break;
                 case 'images/gem-green.png' : scoreboard.score += 2;
@@ -174,11 +174,12 @@ var Engine = (function(global) {
          * the render function you have defined.
          */
         allEnemies.forEach(function(enemy) {
-            enemy.render();
+            enemy.render(); // each individual enemy object rendering
         });
 
-        player.render();
+        player.render(); // player rendering
 
+        // check if gem rendering is allowed
         if (gem.renderOn) {
             gem.render();
         }    
@@ -188,7 +189,7 @@ var Engine = (function(global) {
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
-    function reset() {
+    function reset() { // set game score to zero at the begining of the game
         scoreboard.score = 0;
         scoreboard.update();
     }

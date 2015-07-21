@@ -26,7 +26,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     var newX = this.x + (this.speed * dt);
     if (newX <= 505)
-        this.x = newX;  // enemy is within screen limits
+        this.x = newX;  // enemy is within screen bounderies
     else {  // enemy reached screen limit, restarting (X,Y) coord and Speed
         this.x = -100;
         this.y = this.baseYPos + (83 * Resources.getRandomInt(0, 2));
@@ -56,7 +56,7 @@ Player.prototype.reset = function() {
     this.y = 405;
 };
 
-Player.prototype.update = function() {
+Player.prototype.update = function() { // set player new position in the map 
     var newX = this.x + this.shiftX;
     var newY = this.y + this.shiftY;
 
@@ -137,30 +137,34 @@ Gem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Implement the timing and selection of the gem to be displayed
 Gem.prototype.renderTimer = function() {
-    setInterval(function() {
+    setInterval(function() { // set the cycle of gem selection and display, gems appear every 12 sec 
         var gemType = gem.spriteArray[Resources.getRandomInt(0, 2)]; // randomly select gem type
-        gem.sprite = gemType.sprite;
-        gem.update();
+        gem.sprite = gemType.sprite; // update gem sprite property with current gem type
+        gem.update(); // update the gem poositioning in the canvas
         gem.renderOn = !(gem.renderOn); // alternate active/inactive gem rendering
         gemTimeout = setTimeout(function() {gem.renderOn = !(gem.renderOn);}, gemType.timeout);
-    }, 12000);
+    }, 12000); // set the duration of gem display, depending of gem type would be 4, 3, 2 sec
 };
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [];
+var allEnemies = []; // definition and init of array of Enemy objects
 
-// Instantiating five Enemy objects 
+// Instantiating five Enemy objects and storing in array of objects
 for (var i = 0; i < 5; i++) {
     allEnemies[i] = new Enemy();
 }
 
+// instantiating player object
 var player = new Player();
 
+// instantiating scoreboard object to keep game scores
 var scoreboard = new Scoreboard();
 
+// instantiating gem object to provide bonus feature to the game
 var gem = new Gem();
 
 // This listens for key presses and sends the keys to your
