@@ -10,7 +10,7 @@ var Enemy = function() {
 
     // Initial enemy position selection, (x,y) position will be randomly selected
     // between upper, middle, and lower stone rows and five stone columns
-    this.x = this.baseXPos + (101 * Resources.getRandomInt(0, 5)); 
+    this.x = this.baseXPos + (101 * Resources.getRandomInt(0, 5));
     this.y = this.baseYPos + (83 * Resources.getRandomInt(0, 2));
 
     // The image/sprite for our enemies, this uses
@@ -45,18 +45,18 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
     this.reset();       // Restart player to initial position
-    this.shiftX = 0;    // x coordinate pixels movement    
+    this.shiftX = 0;    // x coordinate pixels movement
     this.shiftY = 0;    // y coordinate pixels movement
     this.sprite = 'images/char-boy.png';
 };
 
 // Reset player's coordinates to initial position (3rd column, 6th row)
-Player.prototype.reset = function() { 
+Player.prototype.reset = function() {
     this.x = 202;
     this.y = 405;
 };
 
-Player.prototype.update = function() { // set player new position in the map 
+Player.prototype.update = function() { // set player new position in the map
     var newX = this.x + this.shiftX;
     var newY = this.y + this.shiftY;
 
@@ -121,8 +121,8 @@ var Gem = function() {
 
 // Stop gem rendering
 Gem.prototype.reset = function() {
-    this.renderOn = false; 
-    this.x = 0; 
+    this.renderOn = false;
+    this.x = 0;
     this.y = 0;
     clearTimeout(gemTimeout); // stop setTimeout() from firing its anonymous function
 };
@@ -139,7 +139,7 @@ Gem.prototype.render = function() {
 
 // Implement the timing and selection of the gem to be displayed
 Gem.prototype.renderTimer = function() {
-    setInterval(function() { // set the cycle of gem selection and display, gems appear every 12 sec 
+    setInterval(function() { // set the cycle of gem selection and display, gems appear every 12 sec
         var gemType = gem.spriteArray[Resources.getRandomInt(0, 2)]; // randomly select gem type
         gem.sprite = gemType.sprite; // update gem sprite property with current gem type
         gem.update(); // update the gem poositioning in the canvas

@@ -101,8 +101,8 @@ var Engine = (function(global) {
     }
 
     function checkCollisions() {
-        allEnemies.forEach(function(enemy) { // check if enemy and player are in collision 
-            if (((enemy.x >= (player.x - 50)) && (enemy.x <= (player.x + 50))) && 
+        allEnemies.forEach(function(enemy) { // check if enemy and player are in collision
+            if (((enemy.x >= (player.x - 50)) && (enemy.x <= (player.x + 50))) &&
                 (enemy.y == (player.y - 13))) {
                 player.reset();
                 scoreboard.score -= 2; // score decremented by one due to collision
@@ -182,7 +182,7 @@ var Engine = (function(global) {
         // check if gem rendering is allowed
         if (gem.renderOn) {
             gem.render();
-        }    
+        }
     }
 
     /* This function does nothing but it could have been a good place to
